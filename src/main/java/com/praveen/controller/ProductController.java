@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.praveen.dto.ProductDto;
+import com.praveen.dto.ProductResponse;
 import com.praveen.service.ProductService;
 
 @RestController
@@ -80,6 +82,26 @@ public class ProductController {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return new ResponseEntity<>("Delete success", HttpStatus.OK);
+	}
+	
+	@GetMapping("/page-products")
+	public ResponseEntity<?> getProductsPaginate(@RequestParam(name = "pageNo", defaultValue = "0") int pageNo,
+			@RequestParam(name = "pageSize", defaultValue = "2") int pageSize,
+			@RequestParam(name = "sortBy", defaultValue = "id") String sortBy,
+			@RequestParam(name = "sortDir", defaultValue = "asc") String sortDir) {
+		ProductResponse productResponse = null;
+//		String name = null;
+//		name.toUpperCase();
+		try {
+
+			productResponse = productService.getProductsWithPagination(pageNo, pageSize, sortBy, sortDir);
+			if (ObjectUtils.isEmpty(productResponse)) {
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			}
+		} catch (Exception e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<>(productResponse, HttpStatus.OK);
 	}
 
 

@@ -10,14 +10,13 @@ import com.praveen.mapper.ProductMapper;
 public class ProjectConfig {
 
 	@Bean
-	public ModelMapper mapper()
-	{
+	public ModelMapper mapper() {
 		return new ModelMapper();
 	}
+
 	@Bean
 	public ProductMapper productMapper() {
 		return new ProductMapper();
 	}
-	
-	
+
 }
