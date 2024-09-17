@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 import com.praveen.dto.ProductDto;
+import com.praveen.dto.ProductResponse;
 import com.praveen.mapper.ProductMapper;
 import com.praveen.model.Product;
 import com.praveen.repository.ProductRepository;
@@ -27,7 +28,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@Autowired
 	private ModelMapper mapper;
-	
+
 	@Autowired
 	private ProductMapper productMapper;
 
@@ -41,7 +42,7 @@ public class ProductServiceImpl implements ProductService {
 //		product.setPrice(productDto.getPrice());
 //		product.setQuantity(productDto.getQuantity());
 
-		//Product product = mapper.map(productDto, Product.class);
+		// Product product = mapper.map(productDto, Product.class);
 		Product product1 = productMapper.toProduct(productDto);
 		Product save = productRepository.save(product1);
 		if (ObjectUtils.isEmpty(save)) // save=!nulll
@@ -82,6 +83,34 @@ public class ProductServiceImpl implements ProductService {
 		return false;
 	}
 
+	@Override
+	public ProductResponse getProductsWithPagination(int pageNo, int pageSize, String sortBy, String sortDir) {
 
+//		Sort sort = Sort.by(sortBy).ascending();
+//		Sort sort2 = Sort.by(sortBy).descending();
+
+		Sort sort = sortDir.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+
+		Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
+		Page<Product> page = productRepository.findAll(pageable);
+
+		List<Product> products = page.getContent();
+
+		List<ProductDto> productsDtos = products.stream().map(prod -> productMapper.toProductDto(prod)).toList();
+		long totalElements = page.getTotalElements();
+		int totalPages = page.getTotalPages();
+		boolean first = page.isFirst();
+		boolean last = page.isLast();
+
+//		ProductResponse productResponse=new ProductResponse();
+//		productResponse.setProducts(productsDtos);
+//		productResponse.setTotalElements(totalElements);
+
+		ProductResponse productResponse = ProductResponse.builder().products(productsDtos).totalElements(totalElements)
+				.totalPages(totalPages).isFirst(first).isLast(last).pageNo(pageNo).pageSize(pageSize).build();
+
+		return productResponse;
+
+	}
 
 }

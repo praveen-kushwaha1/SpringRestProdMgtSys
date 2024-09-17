@@ -3,7 +3,7 @@ package com.praveen.service;
 import java.util.List;
 
 import com.praveen.dto.ProductDto;
-
+import com.praveen.dto.ProductResponse;
 import com.praveen.model.Product;
 
 public interface ProductService {
@@ -16,6 +16,6 @@ public interface ProductService {
 
 	public Boolean deleteProduct(Integer id);
 
-
+	public ProductResponse getProductsWithPagination(int pageNo, int pageSize, String sortBy, String sortDir);
 
 }

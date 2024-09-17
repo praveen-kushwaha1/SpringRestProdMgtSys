@@ -9,5 +9,4 @@ public class SbRestPmsApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SbRestPmsApplication.class, args);
 	}
-
 }
