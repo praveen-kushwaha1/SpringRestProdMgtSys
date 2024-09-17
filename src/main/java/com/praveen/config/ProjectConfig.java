@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.praveen.mapper.ProductMapper;
+import com.praveen.validator.ProductDTOValidator;
 
 @Configuration
 public class ProjectConfig {
@@ -17,6 +18,10 @@ public class ProjectConfig {
 	@Bean
 	public ProductMapper productMapper() {
 		return new ProductMapper();
+	}
+	@Bean
+	public ProductDTOValidator productDTOValidator() {
+		return new ProductDTOValidator();
 	}
 
 }
