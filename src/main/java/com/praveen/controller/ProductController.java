@@ -19,6 +19,8 @@ import com.praveen.dto.ProductDto;
 import com.praveen.dto.ProductResponse;
 import com.praveen.service.ProductService;
 
+import jakarta.validation.Valid;
+
 @RestController
 public class ProductController {
 
@@ -26,7 +28,7 @@ public class ProductController {
 	private ProductService productService;
 
 	@PostMapping("/save-product")
-	public ResponseEntity<?> saveProduct(@RequestBody ProductDto productDto) {
+	public ResponseEntity<?> saveProduct(@RequestBody @Valid ProductDto productDto) {
 
 		try {
 			Boolean saveProduct = productService.saveProduct(productDto);
