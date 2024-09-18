@@ -15,8 +15,8 @@ public class ProductDto {
 	private Integer id;
 	//@NotBlank
 	private String name;
-	@NotEmpty
-	@Size(min=3, max=10, message="Description min and max is 3-10")
+	//@NotEmpty
+	//@Size(min=3, max=10, message="Description min and max is 3-10")
 	private String description;
 
 	

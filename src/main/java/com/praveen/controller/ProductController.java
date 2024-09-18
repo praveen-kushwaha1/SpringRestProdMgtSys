@@ -18,6 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.praveen.dto.ProductDto;
 import com.praveen.dto.ProductResponse;
 import com.praveen.service.ProductService;
+import com.praveen.validator.ProductDTOValidator;
+
+import jakarta.validation.Valid;
+
+import jakarta.validation.Valid;
 
 import jakarta.validation.Valid;
 
@@ -26,11 +31,13 @@ public class ProductController {
 
 	@Autowired
 	private ProductService productService;
+	@Autowired
+	private ProductDTOValidator productDTOValidator;
 
 	@PostMapping("/save-product")
-	public ResponseEntity<?> saveProduct(@RequestBody @Valid ProductDto productDto) {
-
+	public ResponseEntity<?> saveProduct(@RequestBody  ProductDto productDto)
 		try {
+			productDTOValidator.ValidateProduct(productDto);
 			Boolean saveProduct = productService.saveProduct(productDto);
 			if (!saveProduct) {
 				return new ResponseEntity<>("product not saved", HttpStatus.INTERNAL_SERVER_ERROR);
