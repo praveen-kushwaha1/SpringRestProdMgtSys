@@ -24,6 +24,8 @@ import jakarta.validation.Valid;
 
 import jakarta.validation.Valid;
 
+import jakarta.validation.Valid;
+
 @RestController
 public class ProductController {
 
@@ -33,8 +35,7 @@ public class ProductController {
 	private ProductDTOValidator productDTOValidator;
 
 	@PostMapping("/save-product")
-	public ResponseEntity<?> saveProduct(@RequestBody  ProductDto productDto) {
-
+	public ResponseEntity<?> saveProduct(@RequestBody  ProductDto productDto)
 		try {
 			productDTOValidator.ValidateProduct(productDto);
 			Boolean saveProduct = productService.saveProduct(productDto);
