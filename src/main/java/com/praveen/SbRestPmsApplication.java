@@ -9,6 +9,5 @@ public class SbRestPmsApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SbRestPmsApplication.class, args);
 		System.out.println("App is Running");
-		System.out.println("leaningR");
 	}
 }
